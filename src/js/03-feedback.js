@@ -9,27 +9,35 @@ const messageEl= document.querySelector('[name="message"]');
 formEl.addEventListener("submit", handleFormControl);
 formEl.addEventListener('input', throttle(handleformFildInput, 500));
 
+const formObject = {}
+
+formEl.addEventListener('input', (event) => {
+    formObject[event.target.name] = event.target.value;
+    
+});
+
 fillingFilds();
 
+function fillingFilds (){
+    const formData = localStorage.getItem(STORAGE_KEY);
+
+    if(formData){
+        const formObject = JSON.parse(formData);
+        console.log(formObject);
+        emailEl.value = formObject.email;
+        messageEl.value = formObject.message;
+}
+}
+
 function handleformFildInput(){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ email: emailEl.value, message: messageEl.value }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formObject));
 }
 
 function handleFormControl(event) {
   event.preventDefault();
 
-  console.log({ email: emailEl.value, message: messageEl.value });
+  console.log(formObject);
 
   event.target.reset();
   localStorage.removeItem(STORAGE_KEY);
-}
-
-function fillingFilds (){
-    const formData = localStorage.getItem(STORAGE_KEY);
-    
-    if(formData){
-       const formObject = JSON.parse(formData);
-       emailEl.value = formObject.email;
-       messageEl.value = formObject.message;
-}
 }
