@@ -1,25 +1,22 @@
-// Ініціалізація
-const iframe = document.querySelector('iframe');
-const player = new Vimeo.Player(iframe);
+import throttle from "lodash.throttle";
+import Player from "@vimeo/player";
 
-player.on('play', function() {
-    console.log('played the video!');
-});
+const iframe = document.querySelector("iframe");
+const player = new Player(iframe);
 
-player.getVideoTitle().then(function(title) {
-    console.log('title:', title);
-});
-// ---------
+currentTimeOfPlayer();
 
+player.on(
+  "timeupdate",
+  throttle(function (seconds) {
+    localStorage.setItem("videoplayer-current-time", JSON.stringify(seconds));
+  }, 1000)
+);
 
+function currentTimeOfPlayer() {
+  const time = JSON.parse(localStorage.getItem("videoplayer-current-time"));
 
-const onPlay = function(data) {
-    player.addEventListener('onPlay')
-};
-
-player.on('play', onPlay);
-
-
-
-
-localStorage.setItem("videoplayer-current-time", currentTime);
+  if (time) {
+    player.setCurrentTime(time.seconds);
+  }
+}
