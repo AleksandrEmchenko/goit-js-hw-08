@@ -10,10 +10,10 @@ formEl.addEventListener("submit", handleFormControl);
 formEl.addEventListener('input', throttle(handleformFildInput, 500));
 
 const formObject = {}
-const localObject = JSON.parse(localStorage.getItem(STORAGE_KEY));
+let localObject;
 
 function checkFild(){
-    const localObject = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    localObject = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
     if (localObject) {
         localObject.email ? emailEl.value = localObject.email :  emailEl.value = '';
@@ -26,7 +26,6 @@ checkFild();
 function handleformFildInput(event){
         formObject[event.target.name] = event.target.value;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(formObject));
-        // console.log(formObject);
     }
 
 function handleFormControl(event) {
