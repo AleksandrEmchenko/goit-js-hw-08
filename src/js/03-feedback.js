@@ -24,11 +24,10 @@ function fillingFilds (){
     if(formData){
         const formObject = JSON.parse(formData);
 
-        if(formObject.email && formObject.message){
-        
-            emailEl.value = formObject.email;
-            messageEl.value = formObject.message; 
-        }
+        if (formObject) {
+            formObject.email ? emailEl.value = formObject.email :  emailEl.value = ''
+            formObject.message ? messageEl.value = formObject.message : messageEl.value = ''
+           };
 }
 }
 
@@ -44,3 +43,4 @@ function handleFormControl(event) {
   event.target.reset();
   localStorage.removeItem(STORAGE_KEY);
 }
+
