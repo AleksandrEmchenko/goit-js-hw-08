@@ -10,37 +10,30 @@ formEl.addEventListener("submit", handleFormControl);
 formEl.addEventListener('input', throttle(handleformFildInput, 500));
 
 const formObject = {}
+const localObject = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-formEl.addEventListener('input', (event) => {
-    formObject[event.target.name] = event.target.value;
-    
-});
+function checkFild(){
+    const localObject = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-fillingFilds();
-
-function fillingFilds (){
-    const formData = localStorage.getItem(STORAGE_KEY);
-
-    if(formData){
-        const formObject = JSON.parse(formData);
-
-        if (formObject) {
-            formObject.email ? emailEl.value = formObject.email :  emailEl.value = ''
-            formObject.message ? messageEl.value = formObject.message : messageEl.value = ''
-           };
-}
+    if (localObject) {
+        localObject.email ? emailEl.value = localObject.email :  emailEl.value = '';
+        localObject.message ? messageEl.value = localObject.message : messageEl.value = '';
+       };
 }
 
-function handleformFildInput(){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(formObject));
-}
+checkFild();
+
+function handleformFildInput(event){
+        formObject[event.target.name] = event.target.value;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(formObject));
+        // console.log(formObject);
+    }
 
 function handleFormControl(event) {
-  event.preventDefault();
-
-  console.log(formObject);
-
-  event.target.reset();
-  localStorage.removeItem(STORAGE_KEY);
-}
-
+    event.preventDefault();
+  
+    console.log(localObject);
+  
+    event.target.reset();
+    localStorage.removeItem(STORAGE_KEY);
+  }
