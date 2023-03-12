@@ -23,9 +23,12 @@ function fillingFilds (){
 
     if(formData){
         const formObject = JSON.parse(formData);
-        console.log(formObject);
-        emailEl.value = formObject.email;
-        messageEl.value = formObject.message;
+
+        if(formObject.email && formObject.message){
+        
+            emailEl.value = formObject.email;
+            messageEl.value = formObject.message; 
+        }
 }
 }
 
