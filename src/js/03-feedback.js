@@ -9,7 +9,7 @@ const messageEl= document.querySelector('[name="message"]');
 formEl.addEventListener("submit", handleFormControl);
 formEl.addEventListener('input', throttle(handleformFildInput, 500));
 
-const formObject = {}
+const formObject = {};
 let localObject;
 
 function checkFild(){
